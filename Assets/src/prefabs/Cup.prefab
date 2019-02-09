@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 5235320921909792913}
   - component: {fileID: 5235320921909792912}
   - component: {fileID: 5235320921909792915}
+  - component: {fileID: 5261109682712653406}
   m_Layer: 0
   m_Name: Cup
   m_TagString: Untagged
@@ -132,7 +133,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5235320921909792914}
-  m_Mesh: {fileID: 4300000, guid: 8c3496e3cbdefc1439287c3b69eab6a0, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 8bd46b78a30a2614496a111cfb8adcd8, type: 3}
 --- !u!23 &5235320921909792915
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -150,7 +151,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c3496e3cbdefc1439287c3b69eab6a0, type: 3}
+  - {fileID: 2100000, guid: 8bd46b78a30a2614496a111cfb8adcd8, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -170,3 +171,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5261109682712653406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5235320921909792914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b71fc434459b5498cb62699a972cd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  liquid: {fileID: 5235320920296604410}
