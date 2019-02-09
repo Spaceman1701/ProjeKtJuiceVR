@@ -27,6 +27,8 @@ public class OVRGrabber : MonoBehaviour
     public float grabBegin = 0.55f;
     public float grabEnd = 0.35f;
 
+    public bool isGrabbing = false;
+
     // Demonstrates parenting the held object to the hand's transform when grabbed.
     // When false, the grabbed object is moved every FixedUpdate using MovePosition.
     // Note that MovePosition is required for proper physics simulation. If you set this to true, you can
@@ -241,6 +243,7 @@ public class OVRGrabber : MonoBehaviour
 
         if (closestGrabbable != null)
         {
+            isGrabbing = true;
             if (closestGrabbable.isGrabbed)
             {
                 closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
@@ -332,6 +335,7 @@ public class OVRGrabber : MonoBehaviour
 
             GrabbableRelease(linearVelocity, angularVelocity);
         }
+        isGrabbing = false;
 
         // Re-enable grab volumes to allow overlap events
         GrabVolumeEnable(true);
