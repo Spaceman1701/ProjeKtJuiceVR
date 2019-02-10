@@ -5,8 +5,13 @@ using UnityEngine;
 // Store the liquid within a cup, with methods to help mix them together and score them and shit.
 public class LiquidStorage : MonoBehaviour
 {
-    public Dictionary<LiquidData, float> LiquidDict = new Dictionary<LiquidData, float>();
+    public Dictionary<string, float> LiquidDict;
     private Color AverageColor = new Color(1,1,1,1); // Start white
+
+    public void Start()
+    {
+        LiquidDict = new Dictionary<string, float>();
+    }
 
     public void CalculateAverageColor(Color NewColor)
     {
@@ -21,22 +26,30 @@ public class LiquidStorage : MonoBehaviour
 
     public void AddLiquid(LiquidData addedLiquid, float volume)
     {
-        if (LiquidDict.ContainsKey(addedLiquid))
+        
+        if (LiquidDict.ContainsKey(addedLiquid.LiquidName))
         {
-            LiquidDict[addedLiquid] += volume;
+            LiquidDict[addedLiquid.LiquidName] += volume;
+            Debug.Log("Adding value");
         }
         else
         {
-            LiquidDict[addedLiquid] = volume;
+            LiquidDict[addedLiquid.LiquidName] = volume;
             CalculateAverageColor(addedLiquid.GetColor());
         }
-        Debug.Log("Adding " + addedLiquid.LiquidName);
+        Debug.Log("Added " + addedLiquid.LiquidName);
+
+        foreach(KeyValuePair<string, float> data in LiquidDict)
+        {
+            Debug.Log(data.Key+", "+ data.Value);
+        }
+        Debug.Log("================");
     }
 
     public void RemoveLiquid(float volume)
     {
         float FromEach = volume / LiquidDict.Count;
-        foreach (KeyValuePair<LiquidData, float> liquid in LiquidDict)
+        foreach (KeyValuePair<string, float> liquid in LiquidDict)
         {
             float UpdatedVolume = liquid.Value - FromEach;
             if (UpdatedVolume > 0)
@@ -48,14 +61,30 @@ public class LiquidStorage : MonoBehaviour
                 LiquidDict.Remove(liquid.Key);
             }
         }
+        Debug.Log("------Removing------------");
+        foreach (KeyValuePair<string, float> data in LiquidDict)
+        {
+            Debug.Log(data.Key + ", " + data.Value);
+        }
+        Debug.Log("----------------------------");
+    }
 
+    public void ClearLiquids()
+    {
+        Debug.Log("Clearing dict");
+        LiquidDict.Clear();
+        foreach (KeyValuePair<string, float> data in LiquidDict)
+        {
+            Debug.Log(data.Key + ", " + data.Value);
+        }
+        Debug.Log("----------------------------");
     }
 
     public void Merge(LiquidStorage otherStorage)
     {
-        Dictionary<LiquidData, float> otherDict = otherStorage.GetLiquidDict();
+        Dictionary<string, float> otherDict = otherStorage.GetLiquidDict();
         // Basically add them all together
-        foreach (KeyValuePair<LiquidData, float> other in otherDict)
+        foreach (KeyValuePair<string, float> other in otherDict)
         {
             if (LiquidDict.ContainsKey(other.Key))
             {
@@ -68,7 +97,7 @@ public class LiquidStorage : MonoBehaviour
         }
     }
 
-    public Dictionary<LiquidData, float> GetLiquidDict()
+    public Dictionary<string, float> GetLiquidDict()
     {
         return LiquidDict;
     }
@@ -76,9 +105,9 @@ public class LiquidStorage : MonoBehaviour
     // Check to see if the liquid exists in the storage in the amount within the given threshold
     public bool CheckValue(LiquidData l, float amount, float threshold)
     {
-        if (LiquidDict.ContainsKey(l))
+        if (LiquidDict.ContainsKey(l.LiquidName))
         {
-            return System.Math.Abs(LiquidDict[l] - amount) < threshold;
+            return System.Math.Abs(LiquidDict[l.LiquidName] - amount) < threshold;
         }
         return false;
     }

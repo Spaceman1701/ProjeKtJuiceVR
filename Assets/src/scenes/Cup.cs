@@ -19,7 +19,7 @@ public class Cup : MonoBehaviour
     private LiquidStorage savedLiquidStorage;
 
     private LiquidStorage storage;
-
+    private int count = 0;
 
     void Start()
     {
@@ -29,9 +29,19 @@ public class Cup : MonoBehaviour
 
     void Update()
     {
-        LiquidData test = new LiquidData("testdata", new Color(1,1,1,1));
-        AddVolume(test, testAdd);
-        Slosh();
+        if (testAdd != 0)
+        {
+            if (count == 5)
+            {
+                AddVolume(new LiquidData("MMM", new Color(0, 0, 0, 1)), testAdd);
+            }
+
+            count++;
+            LiquidData test = new LiquidData("testdata", new Color(1, 1, 1, 1));
+            AddVolume(test, testAdd);
+        }
+        FixVolume();
+        // Slosh();
     }
 
     private void Slosh()
@@ -70,25 +80,31 @@ public class Cup : MonoBehaviour
         filledVolume += addedVolume;
         FixVolume();
         UpdateLiquidRender();
-        storage.AddLiquid(addedLiquid, addedVolume);
+        if (filledVolume != volume)
+        {
+            storage.AddLiquid(addedLiquid, addedVolume);
+        }
     }
 
     public void PourVolume(float removedVolume)
     {
         // Actually remove the volume
         filledVolume -= removedVolume;
-        if (filledVolume < 0)
-        {
-            filledVolume = 0;
-        }
         savedLiquidStorage = storage; // Basically just save the liquid when it starts spilling out because whatever scoring is hard
-
-        storage.RemoveLiquid(removedVolume);
+        UpdateLiquidRender();
+        // storage.RemoveLiquid(removedVolume);
     }
 
-    // TODO: Make it so that the ratios of liquids change properly here 
     void FixVolume()
     {
+        
+        if (filledVolume <= 0)
+        {
+            filledVolume = 0;
+            storage.ClearLiquids();
+            UpdateLiquidRender();
+        }
+
         if (filledVolume > volume)
         {
             filledVolume = volume;
@@ -113,4 +129,5 @@ public class Cup : MonoBehaviour
     {
         return volume;
     }
+
 }
