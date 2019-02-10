@@ -86,6 +86,18 @@ public class Cup : MonoBehaviour
         }
     }
 
+    public void AddVolumeStorage(LiquidStorage addedLiquid, float addedVolume)
+    {
+        savedLiquidStorage = null;
+        filledVolume += addedVolume;
+        FixVolume();
+        UpdateLiquidRender();
+        if (filledVolume != volume)
+        {
+            storage.Merge(addedLiquid);
+        }
+    }
+
     public void PourVolume(float removedVolume)
     {
         // Actually remove the volume
@@ -111,10 +123,12 @@ public class Cup : MonoBehaviour
         }
     }
 
-    public LiquidStorage GetSavedLiquidStorage()
+    public LiquidStorage GetLiquidStorage()
     {
-        return savedLiquidStorage;
+        return storage;
     }
+
+
 
     private void UpdateLiquidRender()
     {

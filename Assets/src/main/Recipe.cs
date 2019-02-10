@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recipe : MonoBehaviour
+public class Recipe
 {
 
-    Dictionary<string, float> requiredVals = new Dictionary<string, float>();
+    Dictionary<string, float> requiredVals;
+
+    public Recipe()
+    {
+        requiredVals = new Dictionary<string, float>();
+    }
 
     public void AddLiquid(string name, float val)
     {

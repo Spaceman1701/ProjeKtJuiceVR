@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateRecipes : MonoBehaviour
+public class GenerateRecipes
 {
     private Recipe currentRecipe;
     List<LiquidData> AllLiquids = new List<LiquidData>();
     public int volume = 156;
 
     // Start is called before the first frame update
-    void Start()
+    public GenerateRecipes()
     {
         AllLiquids.Add(new LiquidData("whiskey", new Color(0.65f, 0.16f, 0.16f, 0.7f)));
         AllLiquids.Add(new LiquidData("vodka", new Color(1f, 1f, 1f, 0.4f)));
@@ -30,18 +30,22 @@ public class GenerateRecipes : MonoBehaviour
     
     public void GenerateNewRecipe()
     {
+        currentRecipe = new Recipe();
         System.Random random = new System.Random();
         int count = random.Next(1, AllLiquids.Count);
         int totVol = 0;
         int liquidCount = 0;
+        Debug.Log("Start");
         while (totVol < volume && liquidCount < count)
         {
             int randInd = random.Next(0, count);
             string randLiquid = AllLiquids[randInd].LiquidName;
             int randVol = random.Next(0, volume);
             currentRecipe.AddLiquid(randLiquid, randVol);
+            totVol += randVol;
+            liquidCount += 1;
         }
-
+        Debug.Log("End");
 
     }
 
@@ -50,4 +54,6 @@ public class GenerateRecipes : MonoBehaviour
     {
         
     }
+
+
 }

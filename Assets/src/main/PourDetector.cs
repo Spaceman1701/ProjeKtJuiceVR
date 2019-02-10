@@ -22,11 +22,19 @@ public class PourDetector : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        var otherManager = other.GetComponentInParent<PourManager>();
-        //container.AddVolume(otherManager.GetCurrentPourRate());
-        LiquidData TestLiquid = new LiquidData("Test", new Color(0,1,0,1)); // Temp placeholder for liquid type
-        Debug.Log("Foo");
-        cup.AddVolume(TestLiquid, otherManager.GetDifferenceInVolume());
+        if (other.GetComponent<PourEmitter>() != null)
+        {
+            var otherManager = other.GetComponentInParent<PourManager>();
+            var cup = other.GetComponentInParent<Cup>();
+            //container.AddVolume(otherManager.GetCurrentPourRate());
+            cup.AddVolumeStorage(cup.GetLiquidStorage(), otherManager.GetDifferenceInVolume());
+        } else
+        {
+            var bottle = other.GetComponent<BottleEmitter>();
+            LiquidData lq = new LiquidData(bottle.name, bottle.color);
+            cup.AddVolume(lq, bottle.GetDifferenceInVolume());
+        }
+
 
     }
 }

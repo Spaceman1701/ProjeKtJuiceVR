@@ -18,7 +18,7 @@ public class TextBoard : MonoBehaviour
     {
         tm = GetComponent<TextMeshPro>();
         score = 0;
-        drinkName = "None";
+        drinkName = "Alcholoic Beverage";
         steps = new Dictionary<string, float>();
     }
 
@@ -38,8 +38,14 @@ public class TextBoard : MonoBehaviour
         {
             string step = currentStep + ". " + entry.Key + " (" + entry.Value + " mL) \n";
             text += step;
+            currentStep += 1;
         }
 
         tm.SetText(text);
+    }
+
+    public void SetRecipe(Recipe r)
+    {
+        steps = r.getRecipe();
     }
 }
