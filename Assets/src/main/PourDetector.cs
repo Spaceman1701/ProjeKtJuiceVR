@@ -20,9 +20,9 @@ public class PourDetector : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        var otherManager = other.GetComponent<PourManager>();
-        container.AddVolume(otherManager.GetCurrentPourRate());
+        var otherManager = other.GetComponentInParent<PourManager>();
+        //container.AddVolume(otherManager.GetCurrentPourRate());
+        container.AddVolume(otherManager.GetDifferenceInVolume());
 
-        Debug.Log("AKalsdjklgSDAJlkSDJLKSDJ:SDJWDA HNJKLHFEW");
     }
 }

@@ -29,6 +29,11 @@ public class Container : MonoBehaviour
         return currentHeight;
     }
 
+    public float GetCurrentVolume()
+    {
+        return currentVolume;
+    }
+
     public void AddVolume(float amount)
     {
         currentVolume += amount;
@@ -37,5 +42,9 @@ public class Container : MonoBehaviour
     public void PourVolume(float amount)
     {
         currentVolume -= amount;
+        if (currentVolume < 0)
+        {
+            currentVolume = 0;
+        }
     }
 }

@@ -9,6 +9,7 @@ public class PourManager : MonoBehaviour
     public float minRate;
 
     public float current;
+    private float VolDiff = 0;
 
     public Vector3 up;
 
@@ -24,24 +25,36 @@ public class PourManager : MonoBehaviour
     void Update()
     {
         current = GetCurrentPourRate();
+        VolDiff += current;
+        container.PourVolume(current);
+    }
+
+    public float GetDifferenceInVolume()
+    {
+        float oldDiff = VolDiff;
+        VolDiff = 0;
+        return oldDiff;
+
     }
 
     public float GetCurrentPourRate()
     {
-        float x = (transform.eulerAngles.x - up.x) % 360;
- 
+        if (container.GetCurrentVolume() > 0)
+        {
+            float x = (transform.eulerAngles.x - up.x) % 360;
 
-        if (x < 0)
-        {
-            x += 360;
+
+            if (x < 0)
+            {
+                x += 360;
+            }
+
+            if (x > 90)
+            {
+                return Mathf.Lerp(minRate, maxRate, (x - 90) / 90);
+            }
         }
-          
-        if (x > 90)
-        {
-            float rate = Mathf.Lerp(minRate, maxRate, (x - 90) / 90);
-            container.PourVolume(rate);
-            return rate;
-        }
+        
 
         return 0;
     }
