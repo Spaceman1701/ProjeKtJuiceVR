@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CupTest : MonoBehaviour
 {
-    public GameObject liquid; 
+    public GameObject liquid;
+
     private int sloshSpeed = 60;
     private int difference = 25;
+
+
     // Update is called once per frame
     void Update()
     {
@@ -22,6 +25,14 @@ public class CupTest : MonoBehaviour
         liquid.transform.localEulerAngles = liquidRotation;
     }
 
+    /*private float FixRotation(float value, float threshold)
+    {
+        if (value > threshold)
+        {
+
+        }
+    }
+    */
     private float ClampRotationValue(float value, float difference){
         float returnVal = 0.0f;
         if (value > 180){
