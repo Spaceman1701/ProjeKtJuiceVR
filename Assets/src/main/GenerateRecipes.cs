@@ -6,6 +6,8 @@ public class GenerateRecipes : MonoBehaviour
 {
 
     List<LiquidData> AllLiquids = new List<LiquidData>();
+    public int volume = 156;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,14 @@ public class GenerateRecipes : MonoBehaviour
         AllLiquids.Add(new LiquidData("wine", new Color(1f, 0.16f, 0.16f, 1f))); // Change color probs
     }
 
-
+    public getRecipe
+        public Generatenew
+    public string GetNewRecipe()
+    {
+        Random random = new Random();
+        count = random.Next(1, AllLiquids.Count);
+        return "";
+    }
 
     // Update is called once per frame
     void Update()

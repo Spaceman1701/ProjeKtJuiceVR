@@ -103,11 +103,11 @@ public class LiquidStorage : MonoBehaviour
     }
 
     // Check to see if the liquid exists in the storage in the amount within the given threshold
-    public bool CheckValue(LiquidData l, float amount, float threshold)
+    public bool CheckValue(string LiquidName, float amount, float threshold)
     {
-        if (LiquidDict.ContainsKey(l.LiquidName))
+        if (LiquidDict.ContainsKey(LiquidName))
         {
-            return System.Math.Abs(LiquidDict[l.LiquidName] - amount) < threshold;
+            return System.Math.Abs(LiquidDict[LiquidName] - amount) < threshold;
         }
         return false;
     }
