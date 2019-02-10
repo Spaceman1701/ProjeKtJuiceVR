@@ -7,7 +7,6 @@ public class Cup : MonoBehaviour
     public float diameter;
     public float height;
     private float volume;
-    private Dictionary<LiquidData, float> LiquidDict = new Dictionary<LiquidData, float>();
 
     public float filledVolume = 0.0f;
     public GameObject liquidRender;
@@ -16,15 +15,18 @@ public class Cup : MonoBehaviour
     public int difference = 25;
     public int sloshRate = 60;
 
+    private LiquidStorage storage;
+
 
     void Start()
     {
+        storage = GetComponent<LiquidStorage>();
         volume = (float)System.Math.PI * diameter / 2 * height;
     }
 
     void Update()
     {
-        LiquidData test = new LiquidData("testdata");
+        LiquidData test = new LiquidData("testdata", new Color(1,1,1,1));
         AddVolume(test, testAdd);
         Slosh();
     }
@@ -61,15 +63,7 @@ public class Cup : MonoBehaviour
 
     public void AddVolume(LiquidData addedLiquid, float addedVolume)
     {
-        if (LiquidDict.ContainsKey(addedLiquid))
-        {
-            LiquidDict[addedLiquid] += addedVolume;
-        }
-        else
-        {
-            LiquidDict[addedLiquid] = addedVolume;
-        }
-
+        
         filledVolume += addedVolume;
         FixVolume();
         UpdateLiquidRender();
@@ -77,21 +71,6 @@ public class Cup : MonoBehaviour
 
     public void PourVolume(float removedVolume)
     {
-        // Update the dictionary
-        /*float FromEach = removedVolume / LiquidDict.Count;
-        foreach (KeyValuePair<LiquidData, float> liquid in LiquidDict)
-        {
-            float UpdatedVolume = liquid.Value - FromEach;
-            if (UpdatedVolume > 0)
-            {
-                LiquidDict[liquid.Key] = liquid.Value - FromEach;
-            }
-            else
-            {
-                LiquidDict.Remove(liquid.Key);
-            }
-        }*/
-
         // Actually remove the volume
         filledVolume -= removedVolume;
         if (filledVolume < 0)
