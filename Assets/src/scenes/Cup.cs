@@ -137,6 +137,8 @@ public class Cup : MonoBehaviour
         //Pos[2] = (filledVolume / volume) * 0.02f - 0.01f;
         Pos[1] = (filledVolume / volume) / 10;
         liquidRender.transform.localPosition = Pos;
+
+        liquidRender.GetComponent<MeshRenderer>().material.color = GetLiquidStorage().GetAverageColor();
     }
 
     public float GetTotalVolume()

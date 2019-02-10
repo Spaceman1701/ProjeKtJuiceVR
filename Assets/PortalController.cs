@@ -9,10 +9,13 @@ public class PortalController : MonoBehaviour
 
     private GenerateRecipes r;
 
+    private Scorer s;
+
     // Start is called before the first frame update
     void Start()
     {
         r = new GenerateRecipes();
+        s = new Scorer();
         r.GenerateNewRecipe();
     }
 
@@ -32,7 +35,7 @@ public class PortalController : MonoBehaviour
         {
             var l = c.GetLiquidStorage();
 
-            text.score += 1;
+            text.score += s.Score(r.GetRecipe(), l);
         }
 
         Destroy(other);
