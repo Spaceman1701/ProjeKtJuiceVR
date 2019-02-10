@@ -7,26 +7,41 @@ public class Cup : MonoBehaviour
     public float diameter;
     public float height;
     private float volume;
-    private Dictionary<LiquidData, float> LiquidDict = new Dictionary<LiquidData, float>();
 
     public float filledVolume = 0.0f;
     public GameObject liquidRender;
+
 
     public float testAdd = 0.5f;
     public int difference = 25;
     public int sloshRate = 60;
 
+    private LiquidStorage savedLiquidStorage;
+
+    private LiquidStorage storage;
+    private int count = 0;
 
     void Start()
     {
+        storage = GetComponent<LiquidStorage>();
         volume = (float)System.Math.PI * diameter / 2 * height;
     }
 
     void Update()
     {
-        LiquidData test = new LiquidData("testdata");
-        AddVolume(test, testAdd);
-        Slosh();
+        if (testAdd != 0)
+        {
+            if (count == 5)
+            {
+                AddVolume(new LiquidData("MMM", new Color(0, 0, 0, 1)), testAdd);
+            }
+
+            count++;
+            LiquidData test = new LiquidData("testdata", new Color(1, 1, 1, 1));
+            AddVolume(test, testAdd);
+        }
+        FixVolume();
+        // Slosh();
     }
 
     private void Slosh()
@@ -61,52 +76,44 @@ public class Cup : MonoBehaviour
 
     public void AddVolume(LiquidData addedLiquid, float addedVolume)
     {
-        if (LiquidDict.ContainsKey(addedLiquid))
-        {
-            LiquidDict[addedLiquid] += addedVolume;
-        }
-        else
-        {
-            LiquidDict[addedLiquid] = addedVolume;
-        }
-
+        savedLiquidStorage = null;
         filledVolume += addedVolume;
         FixVolume();
         UpdateLiquidRender();
+        if (filledVolume != volume)
+        {
+            storage.AddLiquid(addedLiquid, addedVolume);
+        }
     }
 
     public void PourVolume(float removedVolume)
     {
-        // Update the dictionary
-        /*float FromEach = removedVolume / LiquidDict.Count;
-        foreach (KeyValuePair<LiquidData, float> liquid in LiquidDict)
-        {
-            float UpdatedVolume = liquid.Value - FromEach;
-            if (UpdatedVolume > 0)
-            {
-                LiquidDict[liquid.Key] = liquid.Value - FromEach;
-            }
-            else
-            {
-                LiquidDict.Remove(liquid.Key);
-            }
-        }*/
-
         // Actually remove the volume
         filledVolume -= removedVolume;
-        if (filledVolume < 0)
-        {
-            filledVolume = 0;
-        }
+        savedLiquidStorage = storage; // Basically just save the liquid when it starts spilling out because whatever scoring is hard
+        UpdateLiquidRender();
+        // storage.RemoveLiquid(removedVolume);
     }
 
-    // TODO: Make it so that the ratios of liquids change properly here 
     void FixVolume()
     {
+        
+        if (filledVolume <= 0)
+        {
+            filledVolume = 0;
+            storage.ClearLiquids();
+            UpdateLiquidRender();
+        }
+
         if (filledVolume > volume)
         {
             filledVolume = volume;
         }
+    }
+
+    public LiquidStorage GetSavedLiquidStorage()
+    {
+        return savedLiquidStorage;
     }
 
     private void UpdateLiquidRender()
@@ -122,4 +129,5 @@ public class Cup : MonoBehaviour
     {
         return volume;
     }
+
 }

@@ -5,10 +5,16 @@ using UnityEngine;
 public class LiquidData
 {
     public string LiquidName = "";
-    public string color = "0x000000";
+    public Color color;
     public float viscosity = 0.5f;
-    public LiquidData(string name)
+    public LiquidData(string name, Color c)
     {
         LiquidName = name;
+        color = c;
+    }
+
+    public Color GetColor()
+    {
+        return color;
     }
 }
