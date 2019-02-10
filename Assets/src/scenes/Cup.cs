@@ -12,13 +12,22 @@ public class Cup : MonoBehaviour
     public float filledVolume = 0.0f;
     public GameObject liquidRender;
 
-    public int testAdd = 2;
+    public float testAdd = 0.5f;
 
     void Start()
     {
         volume = (float)System.Math.PI * diameter / 2 * height;
     }
 
+    private void Slosh()
+    {
+        Quaternion inverseRotation = Quaternion.Inverse(transform.localRotation);
+        Vector3 liquidRotation = Quaternion.RotateTowards(liquidRender.transform.localRotation, inverseRotation, 60 * Time.deltaTime).eulerAngles;
+        //liquidRotation.x = ClampRotationValue(liquidRotation.x, difference);
+        //liquidRotation.y = ClampRotationValue(liquidRotation.y, difference);
+
+        liquidRender.transform.localEulerAngles = liquidRotation;
+    }
     void AddLiquid(LiquidData addedLiquid, float addedVolume)
     {
         if (liquidDict.ContainsKey(addedLiquid))
