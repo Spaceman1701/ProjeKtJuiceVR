@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenerateRecipes : MonoBehaviour
 {
-
+    private Recipe currentRecipe;
     List<LiquidData> AllLiquids = new List<LiquidData>();
     public int volume = 156;
 
@@ -22,13 +22,27 @@ public class GenerateRecipes : MonoBehaviour
         AllLiquids.Add(new LiquidData("wine", new Color(1f, 0.16f, 0.16f, 1f))); // Change color probs
     }
 
-    public getRecipe
-        public Generatenew
-    public string GetNewRecipe()
+   
+    public Recipe GetRecipe()
     {
-        Random random = new Random();
-        count = random.Next(1, AllLiquids.Count);
-        return "";
+        return currentRecipe;
+    }
+    
+    public void GenerateNewRecipe()
+    {
+        System.Random random = new System.Random();
+        int count = random.Next(1, AllLiquids.Count);
+        int totVol = 0;
+        int liquidCount = 0;
+        while (totVol < volume && liquidCount < count)
+        {
+            int randInd = random.Next(0, count);
+            string randLiquid = AllLiquids[randInd].LiquidName;
+            int randVol = random.Next(0, volume);
+            currentRecipe.AddLiquid(randLiquid, randVol);
+        }
+
+
     }
 
     // Update is called once per frame
