@@ -15,7 +15,6 @@ public class Container : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentVolume = 0;
         currentHeight = zeroHeight;
     }
 
@@ -28,5 +27,15 @@ public class Container : MonoBehaviour
     public float GetCurrentHeight()
     {
         return currentHeight;
+    }
+
+    public void AddVolume(float amount)
+    {
+        currentVolume += amount;
+    }
+
+    public void PourVolume(float amount)
+    {
+        currentVolume -= amount;
     }
 }

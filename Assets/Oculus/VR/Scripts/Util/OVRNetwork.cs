@@ -84,6 +84,7 @@ public class OVRNetwork
 
 		public void StartListening(int listeningPort)
 		{
+            return;
 			if (tcpListener != null)
 			{
 				Debug.LogWarning("[OVRNetworkTcpServer] tcpListener is not null");
@@ -122,6 +123,7 @@ public class OVRNetwork
 
 		public void StopListening()
 		{
+            return;
 			if (tcpListener == null)
 			{
 				Debug.LogWarning("[OVRNetworkTcpServer] tcpListener is null");
