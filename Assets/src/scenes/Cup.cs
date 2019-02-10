@@ -7,7 +7,7 @@ public class Cup : MonoBehaviour
     public float diameter;
     public float height;
     private float volume;
-    private Dictionary<LiquidData, float> liquidDict = new Dictionary<LiquidData, float>();
+    private Dictionary<LiquidData, float> LiquidDict = new Dictionary<LiquidData, float>();
 
     public float filledVolume = 0.0f;
     public GameObject liquidRender;
@@ -56,13 +56,13 @@ public class Cup : MonoBehaviour
 
     void AddLiquid(LiquidData addedLiquid, float addedVolume)
     {
-        if (liquidDict.ContainsKey(addedLiquid))
+        if (LiquidDict.ContainsKey(addedLiquid))
         {
-            liquidDict[addedLiquid] += addedVolume;
+            LiquidDict[addedLiquid] += addedVolume;
         }
         else
         {
-            liquidDict[addedLiquid] = addedVolume;
+            LiquidDict[addedLiquid] = addedVolume;
         }
 
         filledVolume += addedVolume;
@@ -70,14 +70,21 @@ public class Cup : MonoBehaviour
         UpdateLiquidRender();
     }
 
-    
+    void RemoveLiquid(float removedVolume)
+    {
+        float FromEach = removedVolume / LiquidDict.Count;
+        foreach(KeyValuePair<LiquidData, float> liquid in LiquidDict)
+        {
+            LiquidDict[liquid.Key] = liquid.Value - FromEach;
+        }
+    }
+
     // TODO: Make it so that the ratios of liquids change properly here 
     void FixVolume()
     {
         if (filledVolume > volume)
         {
-            //filledVolume = volume;
-            filledVolume = 0;
+            filledVolume = volume;
         }
     }
 
