@@ -13,12 +13,14 @@ public class PourManager : MonoBehaviour
 
     public Vector3 up;
 
-    private Container container;
+    //private Container container;
+    private Cup cup;
 
     // Start is called before the first frame update
     void Start()
     {
-        container = GetComponent<Container>();
+        //container = GetComponent<Container>();
+        cup = GetComponent<Cup>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class PourManager : MonoBehaviour
     {
         current = GetCurrentPourRate();
         VolDiff += current;
-        container.PourVolume(current);
+        cup.PourVolume(current);
     }
 
     public float GetDifferenceInVolume()
@@ -39,7 +41,7 @@ public class PourManager : MonoBehaviour
 
     public float GetCurrentPourRate()
     {
-        if (container.GetCurrentVolume() > 0)
+        if (cup.GetCurrentVolume() > 0)
         {
             float x = (transform.eulerAngles.x - up.x) % 360;
 

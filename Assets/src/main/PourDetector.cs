@@ -5,11 +5,13 @@ using UnityEngine;
 public class PourDetector : MonoBehaviour
 {
 
-    private Container container;
+    //private Container container;
+    private Cup cup;
     // Start is called before the first frame update
     void Start()
     {
-        container = GetComponentInParent<Container>();
+        //container = GetComponentInParent<Container>();
+        cup = GetComponentInParent<Cup>();
     }
 
     // Update is called once per frame
@@ -22,7 +24,8 @@ public class PourDetector : MonoBehaviour
     {
         var otherManager = other.GetComponentInParent<PourManager>();
         //container.AddVolume(otherManager.GetCurrentPourRate());
-        container.AddVolume(otherManager.GetDifferenceInVolume());
+        LiquidData TestLiquid = new LiquidData("Test"); // Temp placeholder for liquid type
+        cup.AddVolume(TestLiquid, otherManager.GetDifferenceInVolume());
 
     }
 }

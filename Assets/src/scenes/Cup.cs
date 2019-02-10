@@ -25,7 +25,7 @@ public class Cup : MonoBehaviour
     void Update()
     {
         LiquidData test = new LiquidData("testdata");
-        AddLiquid(test, testAdd);
+        AddVolume(test, testAdd);
         Slosh();
     }
 
@@ -54,7 +54,12 @@ public class Cup : MonoBehaviour
 
     }
 
-    void AddLiquid(LiquidData addedLiquid, float addedVolume)
+    public float GetCurrentVolume()
+    {
+        return filledVolume;
+    }
+
+    public void AddVolume(LiquidData addedLiquid, float addedVolume)
     {
         if (LiquidDict.ContainsKey(addedLiquid))
         {
@@ -70,12 +75,28 @@ public class Cup : MonoBehaviour
         UpdateLiquidRender();
     }
 
-    void RemoveLiquid(float removedVolume)
+    public void PourVolume(float removedVolume)
     {
+        // Update the dictionary
         float FromEach = removedVolume / LiquidDict.Count;
-        foreach(KeyValuePair<LiquidData, float> liquid in LiquidDict)
+        foreach (KeyValuePair<LiquidData, float> liquid in LiquidDict)
         {
-            LiquidDict[liquid.Key] = liquid.Value - FromEach;
+            float UpdatedVolume = liquid.Value - FromEach;
+            if (UpdatedVolume > 0)
+            {
+                LiquidDict[liquid.Key] = liquid.Value - FromEach;
+            }
+            else
+            {
+                LiquidDict.Remove(liquid.Key);
+            }
+        }
+
+        // Actually remove the volume
+        filledVolume -= removedVolume;
+        if (filledVolume < 0)
+        {
+            filledVolume = 0;
         }
     }
 
@@ -95,5 +116,10 @@ public class Cup : MonoBehaviour
         //Pos[2] = (filledVolume / volume) * 0.02f - 0.01f;
         Pos[1] = (filledVolume / volume) / 10;
         liquidRender.transform.localPosition = Pos;
+    }
+
+    public float GetTotalVolume()
+    {
+        return volume;
     }
 }
