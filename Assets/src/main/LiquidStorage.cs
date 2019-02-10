@@ -5,7 +5,7 @@ using UnityEngine;
 // Store the liquid within a cup, with methods to help mix them together and score them and shit.
 public class LiquidStorage : MonoBehaviour
 {
-    private Dictionary<LiquidData, float> LiquidDict = new Dictionary<LiquidData, float>();
+    public Dictionary<LiquidData, float> LiquidDict = new Dictionary<LiquidData, float>();
     private Color AverageColor = new Color(1,1,1,1); // Start white
 
     public void CalculateAverageColor(Color NewColor)
@@ -30,6 +30,7 @@ public class LiquidStorage : MonoBehaviour
             LiquidDict[addedLiquid] = volume;
             CalculateAverageColor(addedLiquid.GetColor());
         }
+        Debug.Log("Adding " + addedLiquid.LiquidName);
     }
 
     public void RemoveLiquid(float volume)
@@ -48,6 +49,23 @@ public class LiquidStorage : MonoBehaviour
             }
         }
 
+    }
+
+    public void Merge(LiquidStorage otherStorage)
+    {
+        Dictionary<LiquidData, float> otherDict = otherStorage.GetLiquidDict();
+        // Basically add them all together
+        foreach (KeyValuePair<LiquidData, float> other in otherDict)
+        {
+            if (LiquidDict.ContainsKey(other.Key))
+            {
+                LiquidDict[other.Key] += other.Value;   
+            }
+            else
+            {
+                LiquidDict[other.Key] = other.Value;
+            }
+        }
     }
 
     public Dictionary<LiquidData, float> GetLiquidDict()

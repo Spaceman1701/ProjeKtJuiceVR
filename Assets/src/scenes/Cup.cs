@@ -11,9 +11,12 @@ public class Cup : MonoBehaviour
     public float filledVolume = 0.0f;
     public GameObject liquidRender;
 
+
     public float testAdd = 0.5f;
     public int difference = 25;
     public int sloshRate = 60;
+
+    private LiquidStorage savedLiquidStorage;
 
     private LiquidStorage storage;
 
@@ -63,10 +66,11 @@ public class Cup : MonoBehaviour
 
     public void AddVolume(LiquidData addedLiquid, float addedVolume)
     {
-        
+        savedLiquidStorage = null;
         filledVolume += addedVolume;
         FixVolume();
         UpdateLiquidRender();
+        storage.AddLiquid(addedLiquid, addedVolume);
     }
 
     public void PourVolume(float removedVolume)
@@ -77,6 +81,9 @@ public class Cup : MonoBehaviour
         {
             filledVolume = 0;
         }
+        savedLiquidStorage = storage; // Basically just save the liquid when it starts spilling out because whatever scoring is hard
+
+        storage.RemoveLiquid(removedVolume);
     }
 
     // TODO: Make it so that the ratios of liquids change properly here 
@@ -86,6 +93,11 @@ public class Cup : MonoBehaviour
         {
             filledVolume = volume;
         }
+    }
+
+    public LiquidStorage GetSavedLiquidStorage()
+    {
+        return savedLiquidStorage;
     }
 
     private void UpdateLiquidRender()
