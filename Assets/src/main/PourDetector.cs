@@ -25,6 +25,7 @@ public class PourDetector : MonoBehaviour
         var otherManager = other.GetComponentInParent<PourManager>();
         //container.AddVolume(otherManager.GetCurrentPourRate());
         LiquidData TestLiquid = new LiquidData("Test"); // Temp placeholder for liquid type
+        Debug.Log("Foo");
         cup.AddVolume(TestLiquid, otherManager.GetDifferenceInVolume());
 
     }

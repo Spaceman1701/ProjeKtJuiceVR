@@ -78,7 +78,7 @@ public class Cup : MonoBehaviour
     public void PourVolume(float removedVolume)
     {
         // Update the dictionary
-        float FromEach = removedVolume / LiquidDict.Count;
+        /*float FromEach = removedVolume / LiquidDict.Count;
         foreach (KeyValuePair<LiquidData, float> liquid in LiquidDict)
         {
             float UpdatedVolume = liquid.Value - FromEach;
@@ -90,7 +90,7 @@ public class Cup : MonoBehaviour
             {
                 LiquidDict.Remove(liquid.Key);
             }
-        }
+        }*/
 
         // Actually remove the volume
         filledVolume -= removedVolume;

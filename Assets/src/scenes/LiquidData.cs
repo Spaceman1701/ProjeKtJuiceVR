@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiquidData : MonoBehaviour
+public class LiquidData
 {
     public string LiquidName = "";
     public string color = "0x000000";
